@@ -30,10 +30,11 @@ def run_multi_logistic(r0, r_max, r_increment, x0, iterations, ret_length) :
   # Create an array to store the results of all the model runs.
   # Length will be the number of runs, width will be the number of results
   #  returned from each run.
-  arr_results = np.zeros( ( n_runs , ret_length ) )  
+  arr_results = np.zeros( ( n_runs , ret_length+1 ) )  
 
   while n < n_runs :
-    arr_results[n] = run_single_logistic( r, x0, iterations, ret_length )
+    arr_results[n,0] = r
+    arr_results[n,1:] = run_single_logistic( r, x0, iterations, ret_length )
     n = n + 1
     r = r + r_increment
   
@@ -48,5 +49,6 @@ def run_multi_logistic(r0, r_max, r_increment, x0, iterations, ret_length) :
 
 # Do a range of runs
 arr_m = run_multi_logistic( 2.9, 4.0, 0.001, 0.15, 100, 20 )
-plt.plot( arr_m, ',-g' , lw=0.25 )
+plt.plot( arr_m[:,0] , arr_m[:,1:] , ',g' , lw=0.25 )
 plt.show()
+
